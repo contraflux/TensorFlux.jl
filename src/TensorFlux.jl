@@ -96,6 +96,6 @@ export minkowski, symmetrize, antisymmetrize
 export evaluate
 
 # visualization
-export plot_surface!, plot_vectors!
+export surface_2dembed!, scalar_2d!, scalar_2dembed!, vectors_2d!, vectors_2dembed!
 
 end

@@ -6,7 +6,7 @@ using GLMakie
 """
 Plot a 2d surface embedded in 3d
 """
-function TensorFLux.surface_2dembed!(ax, embedding, xs, ys; color=:grey)
+function TensorFlux.surface_2dembed!(ax, embedding, xs, ys; color=:grey)
     us = [embedding(x, y)[1] for x in xs, y in ys]
     vs = [embedding(x, y)[2] for x in xs, y in ys]
     ws = [embedding(x, y)[3] for x in xs, y in ys]
@@ -29,7 +29,7 @@ end
 """
 Plot scalars on a 2d surface embedded in 3d
 """
-function TensorFLux.scalar_2dembed!(ax, coordinates, embedding, xs, ys, f; colormap=:viridis)
+function TensorFlux.scalar_2dembed!(ax, coordinates, embedding, xs, ys, f; colormap=:viridis)
     u, v = coordinates
     us = [embedding(x, y)[1] for x in xs, y in ys]
     vs = [embedding(x, y)[2] for x in xs, y in ys]
