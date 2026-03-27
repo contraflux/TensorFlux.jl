@@ -4,7 +4,7 @@ A differential geometry library that stays true to the mathematical notation and
 ## Installation
 TensorFlux.jl can be installed by either running
 ```julia
-julia> Pkg; 
+julia> using Pkg
 julia> Pkg.add("https://github.com/contraflux/TensorFlux.jl")
 ```
 or by pressing `]` and running
