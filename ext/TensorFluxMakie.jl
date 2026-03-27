@@ -60,11 +60,11 @@ Plot vectors on a 2d surface embedded in 3d
 function TensorFlux.vectors_2dembed!(ax, coordinates, basis, embedding, xs, ys, X; spacing=1, lengthscale=1, colormap=:viridis, normalize=false)
     u, v = coordinates
     grid = [(x, y) for x in xs[begin:spacing:end], y in ys[begin:spacing:end]]
-    grid3 = [embedding(x, y) for (x, y) in grid]
-    vecs = [evaluate(X[:i] * basis[:i], Dict(u=>x, v=>y)).data for (x, y) in grid]
+    grid3 = [Point3f(embedding(x, y)) for (x, y) in grid]
+    vecs = [Vec3f(evaluate(X[:i] * basis[:i], Dict(u=>x, v=>y)).data) for (x, y) in grid]
     lengths = [hypot(v...) for v in vecs]
     clim = maximum(abs.(lengths))
-    arrows3d!(ax, grid3, vecs, color=lengths, colorrange=(-clim, clim),
+    arrows3d!(ax, grid3, vecs, color=vec(lengths), colorrange=(-clim, clim),
         lengthscale=lengthscale, colormap=colormap, normalize=normalize
     )
 end
