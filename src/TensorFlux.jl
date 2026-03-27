@@ -95,10 +95,3 @@ export minkowski, symmetrize, antisymmetrize
 export evaluate
 
 end
-
-@variables u v
-basis = Basis([
-    Tensor([1, 0]),
-    Tensor([0, sin(u)])
-])
-simplify(riemann((u, v), basis))
