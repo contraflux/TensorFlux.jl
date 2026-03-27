@@ -25,6 +25,8 @@ getindex() - Einstein convention indexing
 - - Tensor subtraction
 ⋅ - Dot product for (1, 0)-tensors
 ∧ - Wedge product for (0, p)-tensors
+symmetrize() - Symmetrize a tensor
+antisymmetrize() - Antisymmetrize a tensor
 **Geometry**
 metric() - Metric tensor from a basis
 inv() - Invert a (2, 0) or (0, 2)-tensor
@@ -35,8 +37,6 @@ riemann() - Compute the Riemann Curvature Tensor
 ricci() - Compute the Ricci Curvature Tensor
 ricci_scalar() - Compute the Ricci Scalar
 einstein() - Compute the Einstein Tensor
-symmetrize() - Symmetrize a tensor
-antisymmetrize() - Antisymmetrize a tensor
 
 # Examples
 Defining a tensor
@@ -95,3 +95,10 @@ export minkowski, symmetrize, antisymmetrize
 export evaluate
 
 end
+
+@variables u v
+basis = Basis([
+    Tensor([1, 0]),
+    Tensor([0, sin(u)])
+])
+simplify(riemann((u, v), basis))
