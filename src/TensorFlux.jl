@@ -77,6 +77,7 @@ include("algebra.jl")
 include("calculus.jl")
 include("geometry.jl")
 include("symbolic.jl")
+include("visualization.jl")
 
 # Core types
 export Tensor, Basis
@@ -93,5 +94,8 @@ export minkowski, symmetrize, antisymmetrize
 
 # Symbolic
 export evaluate
+
+# visualization
+export plot_surface!, plot_vectors!
 
 end

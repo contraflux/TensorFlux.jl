@@ -8,9 +8,15 @@ Combinatorics = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Symbolics = "0c5d862f-8b57-4792-8d23-62f2024744c7"
 
+[weakdeps]
+GLMakie = "e9467ef8-e4e7-5192-8a1a-b1aee30e663a"
+
 [compat]
 julia = "1.12"
 Symbolics = "7"
 
 [workspace]
 projects = ["test"]
+
+[extensions]
+TensorFluxMakie = "GLMakie"
