@@ -27,6 +27,7 @@ getindex() - Einstein convention indexing
 ∧ - Wedge product for (0, p)-tensors
 symmetrize() - Symmetrize a tensor
 antisymmetrize() - Antisymmetrize a tensor
+dual_basis() - Find the dual basis of a basis
 **Geometry**
 metric() - Metric tensor from a basis
 inv() - Invert a (2, 0) or (0, 2)-tensor
@@ -86,11 +87,12 @@ export PartialDerivative, CovariantDerivative, ExteriorDerivative, HodgeStar
 
 # Algebra
 export ⊗, ∧
+export symmetrize, antisymmetrize, dual_basis
 
 # Geometry
 export metric, christoffel, lie
 export riemann, ricci, ricci_scalar, einstein
-export minkowski, symmetrize, antisymmetrize
+export minkowski
 
 # Symbolic
 export evaluate

@@ -456,3 +456,40 @@ function antisymmetrize(A::IndexedTensor, indices...)
     end
     return make_symmetric(A, indices, :co, true).tensor
 end
+
+"""
+Given a basis, return the dual basis
+
+# Examples
+Finding a covector basis
+```
+julia> e = Basis([
+           Tensor([1, 2]),
+           Tensor([0, 1])
+       ])
+julia> dual_basis(e)
+Basis(Tensor{Float64, 1}[...], (:co,))
+```
+Finding a vector basis
+```
+julia> ε = Basis([
+           Tensor([-3, 2]),
+           Tensor([1, 1])
+       ])
+julia> dual_basis(ε)
+Basis(Tensor{Float64, 1}[...], (:contra,))
+```
+"""
+function dual_basis(basis)
+    if length(basis.variance) != 1
+        error("Basis must be either a vector or covector basis")
+    end
+    E = transpose(hcat([e.data for e in basis.elements]...))
+    E_inv = inv(E)
+    if (basis.variance == (:contra,))
+        dual_elements = [Tensor([col...]') for col in eachcol(E_inv)]
+    else
+        dual_elements = [Tensor([col...]) for col in eachcol(E_inv)]
+    end
+    return Basis(dual_elements)
+end
