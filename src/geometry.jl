@@ -38,11 +38,14 @@ julia> g = metric(basis)
 Tensor{Int64, 2}([5 1; 1 10], (:co, :co))
 ```
 """
-function metric(e::Basis, inner_product=⋅)
+function metric(e::Basis, inner_product=⋅; simple=false)
     if e.variance != (:contra,)
         error("Must be a vector basis")
     end
     g = [inner_product(e.elements[i], e.elements[j]) for i in eachindex(e.elements), j in eachindex(e.elements)]
+    if simple
+        return simplify(Tensor(g, (:co, :co,)))
+    end
     return Tensor(g, (:co, :co,))
 end
 
@@ -59,13 +62,16 @@ julia> christoffel((u, v), basis)
 IndexedTensor{Num, 3, 1, 2}(Tensor{Num, 3}..., (:l,), (:j, :k))
 ```
 """
-function christoffel(coordinates, basis)
+function christoffel(coordinates, basis; simple=false)
     ∂ = PartialDerivative(coordinates)
     g = metric(basis)
     G = inv(g)
     T1 = ∂[:k] * g[:r, :j]
     T2 = ∂[:j] * g[:r, :k]
     T3 = ∂[:r] * g[:j, :k]
+    if simple
+        return simplify((0.5 * G[:l, :r] * (T1 + T2 - T3)).tensor)
+    end
     return (0.5 * G[:l, :r] * (T1 + T2 - T3)).tensor
 end
 
@@ -84,9 +90,12 @@ julia> lie(X, Y, ∂)
 Tensor{Num, 1}(Num[-2v - 2u*v, 2v + 2(3 - v)], (:contra,))
 ```
 """
-function lie(X::Tensor, Y::Tensor, ∂::PartialDerivative)
+function lie(X::Tensor, Y::Tensor, ∂::PartialDerivative; simple=false)
     T1 = X[:i] * (∂[:i] * Y[:k])
     T2 = Y[:i] * (∂[:i] * X[:k])
+    if simple
+        return simplify((T1 - T2).tensor)
+    end
     return (T1 - T2).tensor
 end
 
@@ -103,13 +112,16 @@ julia> riemann((θ, φ), basis)
 Tensor{Num, 4}(Num[...], (:contra, :co, :co, :co))
 ```
 """
-function riemann(coordinates, basis)
+function riemann(coordinates, basis; simple=false)
     ∂ = PartialDerivative(coordinates)
     Γ = christoffel(coordinates, basis)
     T1 = ∂[:i] * Γ[:l][:j, :k]
     T2 = ∂[:j] * Γ[:l][:i, :k]
     T3 = Γ[:l][:i, :m] * Γ[:m][:j, :k]
     T4 = Γ[:l][:j, :m] * Γ[:m][:i, :k]
+    if simple
+        return simplify((T1 - T2 + T3 - T4).tensor)
+    end
     return (T1 - T2 + T3 - T4).tensor
 end
 
@@ -126,8 +138,11 @@ julia> ricci((θ, φ), basis)
 Tensor{Num, 2}(Num[...], (:co, :co))
 ```
 """
-function ricci(coordinates, basis)
+function ricci(coordinates, basis; simple=false)
     R = riemann(coordinates, basis)
+    if simple
+        return simplify(R[:i][:j, :k, :i].tensor)
+    end
     return R[:i][:j, :k, :i].tensor
 end
 
@@ -144,10 +159,13 @@ julia> simplify(ricci_scalar((θ, φ), basis))
 2
 ```
 """
-function ricci_scalar(coordinates, basis, inner_product=⋅)
+function ricci_scalar(coordinates, basis, inner_product=⋅; simple=false)
     R = ricci(coordinates, basis)
     g = metric(basis, inner_product)
     G = inv(g)
+    if simple
+        return simplify(G[:i, :j] * R[:i, :j])
+    end
     return G[:i, :j] * R[:i, :j]
 end
 
@@ -164,9 +182,13 @@ julia> einstein((θ, φ), basis)
 Tensor{Num, 2}(Num[...], (:co, :co))
 ```
 """
-function einstein(coordinates, basis, inner_product=⋅)
+function einstein(coordinates, basis, inner_product=⋅; simple=false)
     R = ricci(coordinates, basis)
     R_scalar = ricci_scalar(coordinates, basis, inner_product)
     g = metric(basis, inner_product)
-    return (R[:i, :j] - (0.5 * R_scalar * g[:i, :j])).tensor
+    G = (R[:i, :j] - (0.5 * R_scalar * g[:i, :j])).tensor
+    if simple
+        return simplify(G)
+    end
+    return G
 end
