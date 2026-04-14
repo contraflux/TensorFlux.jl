@@ -48,9 +48,12 @@ function TensorFlux.vectors_2d!(ax, coordinates, xs, ys, X; spacing=1, lengthsca
     grid = [(x, y) for x in xs[begin:spacing:end], y in ys[begin:spacing:end]]
     vecs = [evaluate(X, Dict(u=>x, v=>y)).data for (x, y) in grid]
     lengths = [hypot(v...) for v in vecs]
+    if normalize
+        vecs = vecs ./ lengths
+    end
     clim = maximum(abs.(lengths))
     arrows2d!(ax, grid, vecs, color=lengths, colorrange=(-clim, clim),
-        lengthscale=lengthscale, colormap=colormap, normalize=normalize
+        lengthscale=lengthscale, colormap=colormap
     )
 end
 
@@ -63,9 +66,12 @@ function TensorFlux.vectors_2dembed!(ax, coordinates, basis, embedding, xs, ys, 
     grid3 = [Point3f(embedding(x, y)) for (x, y) in grid]
     vecs = [Vec3f(evaluate(X[:i] * basis[:i], Dict(u=>x, v=>y)).data) for (x, y) in grid]
     lengths = [hypot(v...) for v in vecs]
+    if normalize
+        vecs = vecs ./ lengths
+    end
     clim = maximum(abs.(lengths))
     arrows3d!(ax, grid3, vecs, color=vec(lengths), colorrange=(-clim, clim),
-        lengthscale=lengthscale, colormap=colormap, normalize=normalize
+        lengthscale=lengthscale, colormap=colormap
     )
 end
 
