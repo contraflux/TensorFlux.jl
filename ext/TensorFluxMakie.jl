@@ -41,6 +41,34 @@ function TensorFlux.scalar_2dembed!(ax, coordinates, embedding, xs, ys, f; color
 end
 
 """
+Plot a path on a 2d surface embedded in 3d
+"""
+function TensorFlux.path_2dembed!(ax, embedding, path, times; linewidth=2, color=:lightblue)
+    positions_embedded = [Point3f(embedding(path(t)...)) for t in times]
+    lines!(ax, positions_embedded, linewidth=linewidth, color=color)
+end
+
+"""
+Plot individual vectors a 2d surface embedded in 3d
+"""
+function TensorFlux.vector_2dembed!(ax, coordinates, basis, embedding, positions, Xs; lengthscale=1, colormap=:viridis, normalize=false)
+    positions_embedded = [Point3f(embedding(p...)) for p in positions]
+    vecs = Any[]
+    for i in eachindex(positions)
+        x, y = positions[i]
+        push!(vecs, evaluate(Xs[i][:i] * basis[:i], Dict(coordinates[1]=>x, coordinates[2]=>y)).data)
+    end
+    lengths = [hypot(v...) for v in vecs]
+    if normalize
+        vecs = vecs ./ lengths
+    end
+    clim = maximum(abs.(lengths))
+    arrows3d!(ax, positions_embedded, vecs, color=vec(lengths), colorrange=(-clim, clim),
+        lengthscale=lengthscale, colormap=colormap
+    )
+end
+
+"""
 Plot vectors in 2d on 2d axes
 """
 function TensorFlux.vectors_2d!(ax, coordinates, xs, ys, X; spacing=1, lengthscale=1, colormap=:viridis, normalize=false)

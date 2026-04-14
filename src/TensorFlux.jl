@@ -79,6 +79,7 @@ include("calculus.jl")
 include("geometry.jl")
 include("symbolic.jl")
 include("visualization.jl")
+include("solver.jl")
 
 # Core types
 export Tensor, Basis
@@ -97,7 +98,11 @@ export minkowski
 # Symbolic
 export evaluate
 
-# visualization
-export surface_2dembed!, scalar_2d!, scalar_2dembed!, vectors_2d!, vectors_2dembed!
+# Visualization
+export surface_2dembed!, scalar_2d!, scalar_2dembed!, path_2dembed!, vector_2dembed!, vectors_2d!, vectors_2dembed!
+
+# Solver
+export geodesic!, parallel_transport!, parallel_transport_path!
+export solve_geodesic, solve_parallel_transport, solve_parallel_transport_path
 
 end

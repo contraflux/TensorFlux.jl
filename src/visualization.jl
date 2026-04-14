@@ -26,6 +26,20 @@ function scalar_2dembed!(args...; kwargs...)
 end
 
 """
+Plot a path on a 2d surface embedded in 3d
+"""
+function path_2dembed!(args...; kwargs...)
+    error("Load GLMakie before using scalar_2dembed!")
+end
+
+"""
+Plot individual vectors a 2d surface embedded in 3d
+"""
+function vector_2dembed!(args...; kwargs...)
+    error("Load GLMakie before using scalar_2dembed!")
+end
+
+"""
 Plot vectors in 2d on 2d axes
 
 vectors_2d!(ax, coordinates, xs, ys, X; spacing=1, lengthscale=1, colormap=:viridis, normalize=false)
