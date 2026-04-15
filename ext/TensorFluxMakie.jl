@@ -35,6 +35,11 @@ function TensorFlux.scalar_2dembed!(ax, coordinates, embedding, xs, ys, f; color
     vs = [embedding(x, y)[2] for x in xs, y in ys]
     ws = [embedding(x, y)[3] for x in xs, y in ys]
     scalars = [evaluate(f, Dict(u=>x, v=>y)) for x in xs, y in ys]
+    if isnothing(colorrange)
+        return surface!(ax, us, vs, ws, color=scalars,
+            colormap=colormap,
+        )
+    end
     surface!(ax, us, vs, ws, color=scalars,
         colormap=colormap, colorrange=colorrange
     )
