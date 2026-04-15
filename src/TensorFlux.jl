@@ -91,7 +91,7 @@ export ⊗, ∧
 export symmetrize, antisymmetrize, dual_basis
 
 # Geometry
-export metric, christoffel, lie
+export metric, christoffel, levicivita, lie
 export riemann, ricci, ricci_scalar, einstein
 export minkowski
 

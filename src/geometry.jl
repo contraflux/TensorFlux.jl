@@ -76,6 +76,28 @@ function christoffel(coordinates, basis; simple=false)
 end
 
 """
+Return the Levi-Civita Connection given coordinates and a basis
+
+# Examples
+```
+julia> @variables u v
+julia> basis = Basis([Tensor([u, 0]), Tensor([0, v])])
+julia> levicivita((u, v), basis)
+CovariantDerivative(
+(1, 2)-Tensor:
+Num[...]
+  (:contra, :co, :co), 
+  PartialDerivative{2}((u, v))
+)
+```
+"""
+function levicivita(coordinates, basis)
+    ∂ = PartialDerivative(coordinates)
+    Γ = christoffel(coordinates, basis)
+    return CovariantDerivative(Γ, ∂)
+end
+
+"""
 Compute the Lie bracket of two (1, 0)-tensors
 
 Returns a (1, 0)-tensor
