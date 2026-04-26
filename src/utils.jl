@@ -99,6 +99,7 @@ Internal. Helper method for symmetric and antisymmetric functions
 function make_symmetric(A::IndexedTensor, indices, variance, anti=false)
     id = Matrix(I, length(indices), length(indices))
     symbols = collect(variance == :contra ? A.contravariant : A.covariant)
+    # Positions of the indices to symmetrize within the full symbol list
     variables = findall(x -> x in indices, symbols)
     swaps = []
     for perm in permutations(indices)
@@ -106,6 +107,7 @@ function make_symmetric(A::IndexedTensor, indices, variance, anti=false)
             symbols[index] = symbol
         end
         perm_indices = map(i -> findfirst(x -> x == i, collect(indices)), perm)
+        # Sign of the permutation (+1 for even, -1 for odd) if antisymmetrizing, 1 otherwise
         k = anti ? sign(det(id[perm_indices, :])) : 1
         if variance == :contra
             if isempty(A.covariant)

@@ -129,11 +129,14 @@ function (hodge::HodgeStar)(A::Tensor)
     ε = LeviCivita()
     lower_indices = [Symbol("dummy_i$i") for i in 1:p]
     upper_indices = [Symbol("dummy_j$i") for i in 1:n]
+    # Raise all p indices of A using the inverse metric, converting the p-form to a contravariant density
     B = A[lower_indices...]
     for i in eachindex(lower_indices)
         B = B * G[lower_indices[i], upper_indices[i]]
     end
+    # Contract with the Levi-Civita symbol to produce the (n-p)-form
     C = B * ε[upper_indices...]
+    # If n == p, A is a top-form and the result is a scalar
     if n == p
         return √(abs(det_g)) * C / factorial(p)
     end

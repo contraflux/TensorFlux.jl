@@ -22,7 +22,8 @@ IndexedTensor{Int64, 2, 1, 1}(Tensor{Int64, 2}..., (:i,), (:j,))
 function Base.getindex(A::Tensor, indices...)
     m = count(x -> x == :contra, A.variance)
     n = count(x -> x == :co, A.variance)
-    # Pure covariant case
+    # Pure covariant tensors are indexed entirely by their covariant indices,
+    # so the general mixed-tensor path (which expects contravariant indices first) doesn't apply
     if m == 0
         if length(indices) != n
             error("Incorrect number of indices provided")
@@ -37,7 +38,7 @@ function Base.getindex(A::Tensor, indices...)
         end
         new_variance = [A.variance[i] for i in eachindex(slicing) if slicing[i] == Colon()]
         symbols = filter(x -> x isa Symbol, indices)
-        # Scalar case
+        # Scalar case (no symbolic indices)
         if isempty(new_variance)
             return A.data[slicing...]
         end
@@ -56,14 +57,15 @@ function Base.getindex(A::Tensor, indices...)
     end
     new_variance = [A.variance[i] for i in eachindex(slicing) if slicing[i] == Colon()]
     symbols = filter(x -> x isa Symbol, indices)
-    # Scalar case
+    # Scalar case (no symbolic indices)
     if isempty(new_variance)
         return A.data[slicing...]
     end
-    # Pure contravariant case
+    # Pure contravariant tensors are indexed entirely by their contravariant indices
     if n == 0
         return IndexedTensor(Tensor(A.data[slicing...], Tuple(new_variance)), symbols, ())
     end
+    # Mixed tensors defer covariant indexing to a second bracket
     return PartialIndexedTensor(Tensor(A.data[slicing...], Tuple(new_variance)), symbols)
 end
 

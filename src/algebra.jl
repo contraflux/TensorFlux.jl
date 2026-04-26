@@ -150,14 +150,14 @@ function Base.:*(A::IndexedTensor, B::IndexedTensor)
     elseif !isempty(intersect(A.covariant, B.covariant))
         error("Repeated covariant indices")
     end
-    # Find pairs of matching contravariant and covariant indices across A and B
+    # Find pairs of matching contravariant and covariant indices across A and B (indices to be contracted over)
     pairs = find_pairs(A, B)
-    # Find the free indicies (those without pairs)
+    # Find the free indicies (those without pairs, not to be contracted over)
     all_indices = union(A.contravariant, A.covariant, B.contravariant, B.covariant)
     contra_contractions = intersect(A.contravariant, B.covariant)
     co_contractions = intersect(A.covariant, B.contravariant)
     free_indices = setdiff(all_indices, union(contra_contractions, co_contractions))
-
+    # Iteration ranges for the contracted indices
     ranges = []
     for (a_idx, b_idx) in pairs
         if size(A.tensor.data, a_idx) != size(B.tensor.data, b_idx)
@@ -165,6 +165,8 @@ function Base.:*(A::IndexedTensor, B::IndexedTensor)
         end
         push!(ranges, 1:size(A.tensor.data, a_idx))
     end
+    # Record information about each free index (what tensor it belongs to, its position in that
+    # tensor's data array, its dimension, and its variance)
     free_indices_info = []
     for free_index in free_indices
         if (free_index in A.contravariant)
@@ -185,16 +187,17 @@ function Base.:*(A::IndexedTensor, B::IndexedTensor)
             push!(free_indices_info, info)
         end
     end
-
     free_ranges = [1:info.dimension for info in free_indices_info]
-    # Promote element types across both tensors so e.g. Int64 * Float64 or Int64 * Num
-    # don't cause a type mismatch when accumulating into result
+    # Promote element types across both tensors to ensure mixed arithmetic (e.g. Int64 * Num) doesn't throw type errors
     T = promote_type(eltype(A.tensor.data), eltype(B.tensor.data))
     result = zeros(T, [info.dimension for info in free_indices_info]...)
+    # Iterate over all combinations of free index values
     for free_index in Iterators.product(free_ranges...)
+        # Sum over all combinations of contracted index values
         for index in Iterators.product(ranges...)
             A_idx = Any[0 for _ in 1:ndims(A.tensor.data)]
             B_idx = Any[0 for _ in 1:ndims(B.tensor.data)]
+            # Fill in the free index values for each tensor's index array
             for (value, info) in zip(free_index, free_indices_info)
                 if info.tensor == :A
                     A_idx[info.index] = value
@@ -202,6 +205,7 @@ function Base.:*(A::IndexedTensor, B::IndexedTensor)
                     B_idx[info.index] = value
                 end
             end
+            # Fill in the contracted index values (same value in both tensors, since they're summed together)
             for (value, location) in zip(index, pairs)
                 A_idx[location[1]] = value
                 B_idx[location[2]] = value
@@ -209,7 +213,6 @@ function Base.:*(A::IndexedTensor, B::IndexedTensor)
             result[free_index...] += A.tensor.data[A_idx...] .* B.tensor.data[B_idx...]
         end
     end
-
     leftover_contra_indices = []
     leftover_co_indices = []
     for (index, info) in zip(free_indices, free_indices_info)
@@ -219,7 +222,7 @@ function Base.:*(A::IndexedTensor, B::IndexedTensor)
             push!(leftover_co_indices, index)
         end
     end
-    # If all indices are free, return the scalar product
+    # If all indices are free, return the tensor product
     if isempty(pairs)
         return IndexedTensor(A.tensor ⊗ B.tensor, Tuple(leftover_contra_indices), Tuple(leftover_co_indices))
     end
