@@ -45,6 +45,8 @@ end
 
 """
 Solve the parallel transport along a path problem given initial conditions
+
+solve_parallel_transport_path(coordinates, basis, path, velocity, w0, times; abstol=1e-5, reltol=1e-5)
 """
 function solve_parallel_transport_path(args...; kwargs...)
     error("Load DifferentialEquations before using solve_parallel_transport_path")
