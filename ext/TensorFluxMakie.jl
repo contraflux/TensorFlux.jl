@@ -4,59 +4,61 @@ using TensorFlux
 using GLMakie
 
 """
-Plot a 2d surface embedded in 3d
+Plot a 2D surface embedded in R3
 """
-function TensorFlux.surface_2dembed!(ax, embedding, xs, ys; color=:grey)
+function TensorFlux.surface_2dembed!(ax, embedding, xs, ys; kwargs...)
+    defaults = (colormap=[:grey, :grey],)
     us = [embedding(x, y)[1] for x in xs, y in ys]
     vs = [embedding(x, y)[2] for x in xs, y in ys]
     ws = [embedding(x, y)[3] for x in xs, y in ys]
-    surface!(ax, us, vs, ws,
-        colormap=[color, color]
+    surface!(ax, us, vs, ws;
+        merge(defaults, kwargs)...
     )
 end
 
 """
-Plot scalars in 2d on 2d axes
+Plot a scalar field in R2
 """
-function TensorFlux.scalar_2d!(ax, coordinates, xs, ys, f; colormap=:viridis, interpolate=false)
+function TensorFlux.scalar_2d!(ax, coordinates, xs, ys, f; kwargs...)
+    defaults = (colormap=:viridis, interpolate=false,)
     u, v = coordinates
     scalars = [evaluate(f, Dict(u=>x, v=>y)) for x in xs, y in ys]
-    heatmap!(ax, xs, ys, scalars, 
-        colormap=colormap, interpolate=interpolate
+    heatmap!(ax, xs, ys, scalars;
+        merge(defaults, kwargs)...
     )
 end
 
 """
-Plot scalars on a 2d surface embedded in 3d
+Plot a scalar field on a 2D surface embedded in R3
 """
-function TensorFlux.scalar_2dembed!(ax, coordinates, embedding, xs, ys, f; colormap=:viridis, colorrange=nothing)
+function TensorFlux.scalar_2dembed!(ax, coordinates, embedding, xs, ys, f; kwargs...)
+    defaults = (colormap=:viridis,)
     u, v = coordinates
     us = [embedding(x, y)[1] for x in xs, y in ys]
     vs = [embedding(x, y)[2] for x in xs, y in ys]
     ws = [embedding(x, y)[3] for x in xs, y in ys]
     scalars = [evaluate(f, Dict(u=>x, v=>y)) for x in xs, y in ys]
-    if isnothing(colorrange)
-        return surface!(ax, us, vs, ws, color=scalars,
-            colormap=colormap,
-        )
-    end
-    surface!(ax, us, vs, ws, color=scalars,
-        colormap=colormap, colorrange=colorrange
+    surface!(ax, us, vs, ws, color=scalars;
+        merge(defaults, kwargs)...
     )
 end
 
 """
-Plot a path on a 2d surface embedded in 3d
+Plot a path on a 2D surface embedded in R3
 """
-function TensorFlux.path_2dembed!(ax, embedding, path, times; linewidth=2, color=:lightblue)
+function TensorFlux.path_2dembed!(ax, embedding, path, times; kwargs...)
+    defaults = (linewidth=2, color=:lightblue,)
     positions_embedded = [Point3f(embedding(path(t)...)) for t in times]
-    lines!(ax, positions_embedded, linewidth=linewidth, color=color)
+    lines!(ax, positions_embedded;
+        merge(defaults, kwargs)...
+    )
 end
 
 """
-Plot individual vectors a 2d surface embedded in 3d
+Plot individual vectors on a 2D surface embedded in R3
 """
-function TensorFlux.vector_2dembed!(ax, coordinates, basis, embedding, positions, Xs; lengthscale=1, colormap=:viridis, normalize=false)
+function TensorFlux.vector_2dembed!(ax, coordinates, basis, embedding, positions, Xs; normalize=false, kwargs...)
+    defaults = (lengthscale=1, colormap=:viridis,)
     positions_embedded = [Point3f(embedding(p...)) for p in positions]
     vecs = Any[]
     for i in eachindex(positions)
@@ -68,15 +70,16 @@ function TensorFlux.vector_2dembed!(ax, coordinates, basis, embedding, positions
         vecs = vecs ./ lengths
     end
     clim = maximum(abs.(lengths))
-    arrows3d!(ax, positions_embedded, vecs, color=vec(lengths), colorrange=(-clim, clim),
-        lengthscale=lengthscale, colormap=colormap
+    arrows3d!(ax, positions_embedded, vecs, color=vec(lengths), colorrange=(-clim, clim);
+        merge(defaults, kwargs)...
     )
 end
 
 """
-Plot vectors in 2d on 2d axes
+Plot a vector field in R2
 """
-function TensorFlux.vectors_2d!(ax, coordinates, xs, ys, X; spacing=1, lengthscale=1, colormap=:viridis, normalize=false)
+function TensorFlux.vectors_2d!(ax, coordinates, xs, ys, X; spacing=1, normalize=false, kwargs...)
+    defaults = (lengthscale=1, colormap=:viridis,)
     u, v = coordinates
     grid = [(x, y) for x in xs[begin:spacing:end], y in ys[begin:spacing:end]]
     vecs = [evaluate(X, Dict(u=>x, v=>y)).data for (x, y) in grid]
@@ -85,15 +88,16 @@ function TensorFlux.vectors_2d!(ax, coordinates, xs, ys, X; spacing=1, lengthsca
         vecs = vecs ./ lengths
     end
     clim = maximum(abs.(lengths))
-    arrows2d!(ax, grid, vecs, color=lengths, colorrange=(-clim, clim),
-        lengthscale=lengthscale, colormap=colormap
+    arrows2d!(ax, grid, vecs, color=lengths, colorrange=(-clim, clim);
+        merge(defaults, kwargs)...
     )
 end
 
 """
-Plot vectors on a 2d surface embedded in 3d
+Plot a vector field on a 2D surface in R3
 """
-function TensorFlux.vectors_2dembed!(ax, coordinates, basis, embedding, xs, ys, X; spacing=1, lengthscale=1, colormap=:viridis, normalize=false)
+function TensorFlux.vectors_2dembed!(ax, coordinates, basis, embedding, xs, ys, X; spacing=1, normalize=false, kwargs...)
+    defaults = (lengthscale=1, colormap=:viridis,)
     u, v = coordinates
     grid = [(x, y) for x in xs[begin:spacing:end], y in ys[begin:spacing:end]]
     grid3 = [Point3f(embedding(x, y)) for (x, y) in grid]
@@ -103,8 +107,8 @@ function TensorFlux.vectors_2dembed!(ax, coordinates, basis, embedding, xs, ys, 
         vecs = vecs ./ lengths
     end
     clim = maximum(abs.(lengths))
-    arrows3d!(ax, grid3, vecs, color=vec(lengths), colorrange=(-clim, clim),
-        lengthscale=lengthscale, colormap=colormap
+    arrows3d!(ax, grid3, vecs, color=vec(lengths), colorrange=(-clim, clim);
+        merge(defaults, kwargs)...
     )
 end
 
