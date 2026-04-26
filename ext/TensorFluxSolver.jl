@@ -5,6 +5,10 @@ using DifferentialEquations
 
 """
 Geodesic problem for the solver
+
+# State vector
+u[1:2] - position
+u[3:4] - velocity
 """
 function TensorFlux.geodesic!(coordinates, Γ, du, u, p, t)
     Γ_num = evaluate(Γ, Dict(coordinates[1]=>u[1], coordinates[2]=>u[2]))
@@ -31,6 +35,11 @@ end
 
 """
 Parallel transport problem for the solver
+
+# State vector
+u[1:2] - position
+u[3:4] - velocity (geodesic)
+u[5:6] - vector being transported
 """
 function TensorFlux.parallel_transport!(coordinates, Γ, du, u, p, t)
     Γ_num = evaluate(Γ, Dict(coordinates[1]=>u[1], coordinates[2]=>u[2]))
@@ -60,6 +69,9 @@ end
 
 """
 Parallel transport along a path problem for the solver
+
+# State vector
+u[1:2] - vector being transported
 """
 function TensorFlux.parallel_transport_path!(coordinates, Γ, path, velocity, du, u, p, t)
     Γ_num = evaluate(Γ, Dict(coordinates[1]=>path(t)[1], coordinates[2]=>path(t)[2]))
