@@ -35,7 +35,7 @@ import {
 
 export default function App() {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/TensorFlux.jl">
             <ScrollToTop />
             <Routes>
                 <Route path="/" element={<Navigate to="/home" replace />} />
