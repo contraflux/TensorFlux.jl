@@ -48,8 +48,6 @@ export default function App() {
                     <Route path="/learn/differential-forms" element={<DifferentialForms />} />
                     <Route path="/learn/visualization" element={<Visualization />} />
                     <Route path="/learn/solver" element={<Solver />} />
-                </Route>
-                <Route element={<Layout />}>
                     <Route path="/reference/geometric-objects" element={<GeometricObjects />} />
                     <Route path="/reference/special-objects" element={<SpecialObjects />} />
                     <Route path="/reference/differential-operators" element={<DifferentialOperators />} />

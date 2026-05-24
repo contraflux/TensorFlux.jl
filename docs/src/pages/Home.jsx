@@ -1,15 +1,13 @@
-// import Layout from '../components/Layout/Layout';
-// import CodeBlock from '../components/CodeBlock/CodeBlock';
-// import Math from '../components/Math/Math';
 import { Link } from 'react-router-dom';
-import Layout from '../components/Layout/Layout';
 import style from './home.module.css';
 import github from '../assets/github.svg';
+import Topbar from '../components/Topbar/Topbar';
 
-export default function GettingStarted() {
+export default function Home() {
     return (
-        <Layout sidebar={false}>
-            <div className={style.section}>
+        <>
+            <Topbar />
+            <div className={style.section} style={{ marginTop: 60 }}>
                 <div className={style.heading}>
                     <p className={style.title}>Differential Geometry Engine for Julia</p>
                     <p className={style.subtitle}>
@@ -44,6 +42,6 @@ export default function GettingStarted() {
                     </p>
                 </div>
             </div>
-        </Layout>
+        </>
     );
 }
