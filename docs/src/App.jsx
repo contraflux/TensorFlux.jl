@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import Home from './pages/Home';
 import Layout from './components/Layout/Layout';
@@ -35,7 +35,7 @@ import {
 
 export default function App() {
     return (
-        <HashRouter>
+        <BrowserRouter>
             <ScrollToTop />
             <Routes>
                 <Route path="/" element={<Navigate to="/home" replace />} />
@@ -69,6 +69,6 @@ export default function App() {
                     <Route path="/reference/parallel-transport" element={<ParallelTransport />} />
                 </Route>
             </Routes>
-        </HashRouter>
+        </BrowserRouter>
     );
 }
