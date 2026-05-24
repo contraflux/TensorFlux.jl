@@ -49,26 +49,26 @@ function Section({ section, isOpen, toggle }) {
 };
 
 export default function Sidebar() {
-  const { pathname } = useLocation();
-  const isReference = pathname.startsWith('/reference');
-  const nav = isReference ? referenceNav : learnNav;
+    const { pathname } = useLocation();
+    const isReference = pathname.startsWith('/reference');
+    const nav = isReference ? referenceNav : learnNav;
 
-  const [openSections, setOpenSections] = useState(() => {
-    const activeSection = nav
-      .flatMap(group => group.sections)
-      .find(section => pathname.startsWith(section.path));
-    return activeSection ? { [activeSection.path]: true } : {};
-  });
+    const [openSections, setOpenSections] = useState(() => {
+        const activeSection = nav
+        .flatMap(group => group.sections)
+        .find(section => pathname.startsWith(section.path));
+        return activeSection ? { [activeSection.path]: true } : {};
+    });
 
-  function toggle(path) {
-    setOpenSections(prev => ({ ...prev, [path]: !prev[path] }));
-  }
+    function toggle(path) {
+        setOpenSections(prev => ({ ...prev, [path]: !prev[path] }));
+    }
 
-  return (
-    <nav className={style.sidebar}>
-      {nav.map((item) => (
-        <Group key={item.title} group={item} openSections={openSections} toggle={toggle} />
-      ))}
-    </nav>
-  );
+    return (
+        <nav className={style.sidebar}>
+            {nav.map((item) => (
+                <Group key={item.title} group={item} openSections={openSections} toggle={toggle} />
+            ))}
+        </nav>
+    );
 }

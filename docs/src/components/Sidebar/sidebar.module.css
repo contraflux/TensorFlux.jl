@@ -5,7 +5,7 @@ p {
 .sidebar {
     position: fixed;
     top: 60px; bottom: 0;
-    padding-top: 30px;
+    padding-top: 15px;
     padding-left: 30px; padding-right: 15px;
     box-sizing: border-box;
     border-right: 1px solid var(--border);
