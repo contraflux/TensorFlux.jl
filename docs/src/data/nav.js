@@ -93,7 +93,6 @@ export const referenceNav = [
                 items: [
                     { title: 'Tensor', anchor: 'tensor' },
                     { title: 'Basis', anchor: 'basis' },
-                    { title: 'HodgeStar', anchor: 'hodge-star' },
                 ],
             },
             {
@@ -102,6 +101,7 @@ export const referenceNav = [
                 items: [
                     { title: 'KroneckerDelta', anchor: 'kronecker-delta' },
                     { title: 'LeviCivita', anchor: 'levi-civita-symbol' },
+                    { title: 'HodgeStar', anchor: 'hodge-star' },
                 ],
             },
             {
@@ -130,14 +130,14 @@ export const referenceNav = [
                 heading: 'Indexing',
                 path: '/reference/indexing',
                 items: [
-                    { title: 'Tensor', anchor: 'getindex-tensor' },
-                    { title: 'PartialIndexedTensor', anchor: 'getindex-partial-indexed-tensor' },
-                    { title: 'KroneckerDelta', anchor: 'getindex-kronecker-delta' },
-                    { title: 'LeviCivita', anchor: 'getindex-levi-civita' },
-                    { title: 'PartialDerivative', anchor: 'getindex-partial-derivative' },
-                    { title: 'CovariantDerivative', anchor: 'getindex-covariant-derivative' },
-                    { title: 'ExteriorDerivative', anchor: 'getindex-exterior-derivative' },
-                    { title: 'Basis', anchor: 'getindex-basis' },
+                    { title: 'Tensor', anchor: 'tensor-getindex' },
+                    { title: 'PartialIndexedTensor', anchor: 'partial-indexed-tensor-getindex' },
+                    { title: 'KroneckerDelta', anchor: 'kronecker-delta-getindex' },
+                    { title: 'LeviCivita', anchor: 'levi-civita-getindex' },
+                    { title: 'PartialDerivative', anchor: 'partial-derivative-getindex' },
+                    { title: 'CovariantDerivative', anchor: 'covariant-derivative-getindex' },
+                    { title: 'ExteriorDerivative', anchor: 'exterior-derivative-getindex' },
+                    { title: 'Basis', anchor: 'basis-getindex' },
                 ],
             },
         ]
