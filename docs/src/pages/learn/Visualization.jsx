@@ -1,4 +1,4 @@
-import CodeBlock from '../../components/CodeBlock/CodeBlock';
+import CodeBlock from '../../components/Code/CodeBlock';
 import PageNav from '../../components/PageNav/PageNav';
 import surface from '../../assets/learn/surface.png';
 import path from '../../assets/learn/path.png';
