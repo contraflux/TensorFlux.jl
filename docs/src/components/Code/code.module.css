@@ -6,6 +6,10 @@
   margin: 20px 60px;
 }
 
+.inset {
+  margin-left: 120px;
+}
+
 .codeheader {
   display: flex;
   align-items: center;

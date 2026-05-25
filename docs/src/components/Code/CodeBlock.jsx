@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-julia';
-import style from './codeblock.module.css';
+import style from './code.module.css';
 
-export default function CodeBlock({ code, result = null, img = null, lang = 'julia' }) {
+export default function CodeBlock({ code, inset = 0, result = null, img = null, lang = 'julia' }) {
     const ref = useRef(null);
 
     useEffect(() => {
@@ -21,7 +21,7 @@ export default function CodeBlock({ code, result = null, img = null, lang = 'jul
     };
 
     return (
-        <div className={style.codeblock} data-block="code-block">
+        <div className={style.codeblock} style={{ marginLeft: inset + 60 }} data-block="code-block">
             <div className={style.codeheader}>
                 <span className={style.codelang}>{lang}</span>
                 <span className={style.codecopy} onClick={copy} data-block="code-copy">copy</span>
