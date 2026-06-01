@@ -230,17 +230,11 @@ export const referenceNav = [
         title: 'Symbolic',
         sections: [
             {
-                heading: 'Simplification',
-                path: '/reference/simplification',
+                heading: 'Simplify & Evaluate',
+                path: '/reference/simplify-evaluate',
                 items: [
                     { title: 'simplify', anchor: 'simplify' },
                     { title: 'substitute', anchor: 'substitute' },
-                ],
-            },
-            {
-                heading: 'Evaluation',
-                path: '/reference/evaluation',
-                items: [
                     { title: 'evaluate', anchor: 'evaluate' },
                 ],
             },

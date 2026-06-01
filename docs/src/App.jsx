@@ -24,8 +24,7 @@ import {
     HodgeStar,
     MetricConnections,
     Curvature,
-    Simplification,
-    Evaluation,
+    SimplifyEvaluate,
     SurfacesPaths,
     ScalarFields,
     VectorFields,
@@ -60,8 +59,7 @@ export default function App() {
                     <Route path="/reference/hodge-star" element={<HodgeStar />} />
                     <Route path="/reference/metric-and-connections" element={<MetricConnections />} />
                     <Route path="/reference/curvature" element={<Curvature />} />
-                    <Route path="/reference/simplification" element={<Simplification />} />
-                    <Route path="/reference/evaluation" element={<Evaluation />} />
+                    <Route path="/reference/simplify-evaluate" element={<SimplifyEvaluate />} />
                     <Route path="/reference/surfaces-and-paths" element={<SurfacesPaths />} />
                     <Route path="/reference/scalar-fields" element={<ScalarFields />} />
                     <Route path="/reference/vector-fields" element={<VectorFields />} />
