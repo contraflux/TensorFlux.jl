@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, Outlet } from 'react-router-dom';
 import Topbar from '../Topbar/Topbar';
 import Sidebar from '../Sidebar/Sidebar';
@@ -17,14 +17,31 @@ function ScrollToHash() {
 }
 
 export default function LearnLayout() {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const { pathname } = useLocation();
+
+    useEffect(() => setSidebarOpen(false), [pathname]);
+
     return (
         <>
             <ScrollToHash />
             <Topbar />
-            <Sidebar />
+            <button
+                className={`${style.sidebarTab} ${sidebarOpen ? style.open : ''}`}
+                onClick={() => setSidebarOpen((o) => !o)}
+                aria-label={sidebarOpen ? 'Close navigation' : 'Open navigation'}
+                aria-expanded={sidebarOpen}
+            >
+                <span className={style.chevron}>&#8250;</span>
+            </button>
+            <div
+                className={`${style.backdrop} ${sidebarOpen ? style.show : ''}`}
+                onClick={() => setSidebarOpen(false)}
+            ></div>
+            <Sidebar open={sidebarOpen} />
             <div className={`${style.layout}`}>
                 <Outlet />
             </div>
         </>
-    ); 
+    );
 }

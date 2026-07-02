@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { learnNav, referenceNav } from '../../data/nav';
 import style from './sidebar.module.css';
@@ -48,7 +48,7 @@ function Section({ section, isOpen, toggle }) {
     );
 };
 
-export default function Sidebar() {
+export default function Sidebar({ open = false }) {
     const { pathname } = useLocation();
     const isReference = pathname.startsWith('/reference');
     const nav = isReference ? referenceNav : learnNav;
@@ -60,12 +60,22 @@ export default function Sidebar() {
         return activeSection ? { [activeSection.path]: true } : {};
     });
 
+    useEffect(() => {
+        const activeSection = nav
+            .flatMap(group => group.sections)
+            .find(section => pathname.startsWith(section.path));
+        if (activeSection && !openSections[activeSection.path]) {
+            setOpenSections(prev => ({ ...prev, [activeSection.path]: true }));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pathname]);
+
     function toggle(path) {
         setOpenSections(prev => ({ ...prev, [path]: !prev[path] }));
     }
 
     return (
-        <nav className={style.sidebar}>
+        <nav className={`${style.sidebar} ${open ? style.open : ''}`}>
             {nav.map((item) => (
                 <Group key={item.title} group={item} openSections={openSections} toggle={toggle} />
             ))}
