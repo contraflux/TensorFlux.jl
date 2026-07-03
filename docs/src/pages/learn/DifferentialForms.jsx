@@ -24,8 +24,8 @@ result={`(0, 2)-Tensor:
             />
             <p className="learn-body">
                 Note that the wedge product maintains antisymmetry, so <code>α ∧ β = -(β ∧ α)</code>.
-                Antisymmetrization ensures that if a form is repeated in a wedge, it
-                returns the <Math>{`0`}</Math> form
+                A direct consequence is that wedging a form with itself always returns
+                the <Math>{`0`}</Math> form
             </p>
             <CodeBlock lang="julia"
 code={`α ∧ α`} 
@@ -67,7 +67,7 @@ result={`(0, 1)-Tensor:
 Num[-1.0, 2.0]
     (:co,)`}
             />
-            <PageNav prev="Differential Geometry" next="Visualization" />
+            <PageNav prev="Differential Geometry" next="Symbolic" />
         </>
     );
 }

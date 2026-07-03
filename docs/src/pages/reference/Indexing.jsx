@@ -174,7 +174,7 @@ Num[v u; 0 2v]
                 <CodeBlock lang="julia" inset={60}
                     code={`# Contracting with a matching index gives the divergence
 ∂[:i] * X[:i]`}
-                    result={`v + 2v`}
+                    result={`3v`}
                 />
             </FunctionDocs>
 
@@ -229,9 +229,10 @@ Num[0.0 u^2; -(u^2) 0.0]
     (:co, :co)`}
                 />
                 <CodeBlock lang="julia" inset={60}
-                    code={`# Nilpotency: d² = 0
+                    code={`# Nilpotency: d² = 0 — β's indices must be freshly labeled,
+# distinct from d's next index, since β carries no memory of :i, :j
 β = d[:i] * α[:j]
-d[:k] * β[:k, :l]`}
+d[:m] * β[:k, :l]`}
                     result={`(0, 3)-Tensor:
 Num[0.0 0.0; 0.0 0.0;;; 0.0 0.0; 0.0 0.0]
     (:co, :co, :co)`}

@@ -19,6 +19,7 @@ function ScrollToHash() {
 export default function LearnLayout() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const { pathname } = useLocation();
+    const section = pathname.startsWith('/reference') ? 'reference' : 'learn';
 
     useEffect(() => setSidebarOpen(false), [pathname]);
 
@@ -39,7 +40,7 @@ export default function LearnLayout() {
                 onClick={() => setSidebarOpen(false)}
             ></div>
             <Sidebar open={sidebarOpen} />
-            <div className={`${style.layout}`}>
+            <div key={section} className={`${style.layout} page-fade-in`}>
                 <Outlet />
             </div>
         </>

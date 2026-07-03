@@ -61,6 +61,15 @@ export const learnNav = [
         title: 'Advanced',
         sections: [
             {
+                heading: 'Symbolic',
+                path: '/learn/symbolic',
+                items: [
+                    { title: 'Simplify', anchor: 'simplify' },
+                    { title: 'Substitute', anchor: 'substitute' },
+                    { title: 'Evaluate', anchor: 'evaluate' },
+                ],
+            },
+            {
                 heading: 'Visualization',
                 path: '/learn/visualization',
                 items: [
@@ -164,7 +173,7 @@ export const referenceNav = [
                     { title: 'Base.:/ (scalar)', anchor: 'division-scalar' },
                     { title: 'Base.:* (KroneckerDelta)', anchor: 'multiplication-kronecker-delta' },
                     { title: 'Base.:* (LeviCivita)', anchor: 'multiplication-levi-civita' },
-                    { title: 'LinearAlgebra.:*', anchor: 'multiplication-linearalgebra' },
+                    { title: 'Base.:* (contraction)', anchor: 'multiplication-linearalgebra' },
                 ],
             },
             {

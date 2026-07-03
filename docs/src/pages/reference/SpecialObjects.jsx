@@ -37,8 +37,10 @@ true
 true`}
                 />
                 <CodeBlock lang="julia" inset={60}
-                    code={`# Contracting with itself yields the dimension of the space
-δ[:i, :i]`}
+                    code={`# The identity tensor is δ made concrete in a fixed dimension —
+# contracting it with itself recovers that dimension
+Id = Tensor([[1, 0]', [0, 1]'])
+Id[:i][:i]`}
                     result={`2`}
                 />
             </TypeDocs>
@@ -64,14 +66,15 @@ v[:i] * u[:j] * ε[:i, :j]`}
 a = Tensor([1, 0, 0])
 b = Tensor([0, 1, 0])
 a[:i] * b[:j] * ε[:i, :j, :k]`}
-                    result={`(1, 0)-Tensor:
+                    result={`(0, 1)-Tensor:
 [0, 0, 1]
-    (:contra,)
-    (:k,), ()`}
+    (:co,)
+    (), (:k,)`}
                 />
                 <CodeBlock lang="julia" inset={60}
-                    code={`# Returns 0 when any indices are repeated
-ε[:i, :i, :k]`}
+                    code={`# Antisymmetry means repeated indices always cancel to 0,
+# so crossing a vector with itself vanishes
+v[:i] * v[:j] * ε[:i, :j]`}
                     result={`0`}
                 />
             </TypeDocs>
@@ -94,24 +97,24 @@ g = metric(e)
 α = Tensor([3, -1]')   # A 1-form in 2D → maps to a 1-form
 ⋆(α)`}
                     result={`(0, 1)-Tensor:
-Num[1.0, 3.0]
+Num[1, 3.0]
     (:co,)`}
                 />
                 <CodeBlock lang="julia" inset={60}
                     code={`# In 3D, a 1-form maps to a 2-form
 e3 = Basis([Tensor([1,0,0]), Tensor([0,1,0]), Tensor([0,0,1])])
-⋆3 = HodgeStar(metric(e3))
+⋆₃ = HodgeStar(metric(e3))
 β = Tensor([1, 0, 0]')
-⋆3(β)`}
+⋆₃(β)`}
                     result={`(0, 2)-Tensor:
-Num[0.0 0.0 0.0; 0.0 0.0 1.0; 0.0 -1.0 0.0]
+Num[0.0 0.0 0.0; 0.0 0.0 1; 0.0 -1.0 0.0]
     (:co, :co)`}
                 />
                 <CodeBlock lang="julia" inset={60}
                     code={`# A top-form (n-form) maps to a scalar
 ω = Tensor([[0, 1]', [-1, 0]']')   # A 2-form in 2D
 ⋆(ω)`}
-                    result={`-1.0`}
+                    result={`1`}
                 />
             </TypeDocs>
 

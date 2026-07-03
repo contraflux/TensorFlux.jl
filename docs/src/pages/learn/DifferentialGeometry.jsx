@@ -47,7 +47,7 @@ result={`(0, 2)-Tensor:
             <CodeBlock lang="julia"
 code={`𝔤 = inv(g)
 ω = Tensor([1, -2]') ⊗ Tensor([-3, 2]') # A (0, 2)-tensor
-julia> 𝔤[:i, :j] * ω[:i, :k]`} 
+𝔤[:i, :j] * ω[:i, :k]`}
 result={`(1, 1)-Tensor:
 Symbolics.Num[-3 2; 6 -4]
     (:contra, :co)
@@ -55,7 +55,7 @@ Symbolics.Num[-3 2; 6 -4]
             />
             <p className="learn-heading" id="covariant-derivative">Covariant Derivative</p>
             <p className="learn-body">
-                Coordinates can be defined using <code>Symbolics.jl</code> and the <code>@variabes</code> macro.
+                Coordinates can be defined using <code>Symbolics.jl</code> and the <code>@variables</code> macro.
                 This allows the construction of tensors that are functions of the coordinates. Differentiating
                 tensor components is performed with the <code>PartialDerivative</code> type, although
                 this only provides the correct derivative when basis vectors are constant
@@ -97,7 +97,7 @@ Num[cos(θ) 0; 0 cos(θ)]
             <p className="learn-heading" id="curvature">Curvature</p>
             <p className="learn-body">
                 There are a few measurements of curvature provided, the first being the Riemann
-                curvature tensor. Passing the <code>simple=true</code> argument applies <code>simplify</code> to
+                tensor. Passing the <code>simple=true</code> argument applies <code>simplify</code> to
                 the result
             </p>
             <CodeBlock lang="julia"
@@ -112,8 +112,7 @@ Num[0.0 0.0; 0.0 -1.0;;; 0.0 sin(θ)^2; 0 0;;;; 0.0 0; 1.0 0;;; -(sin(θ)^2) 0; 
     (:contra, :co, :co, :co)`}
             />
             <p className="learn-body">
-                Contracting two indices of the Riemann curvature tensor yields the Ricci curvature
-                tensor
+                Contracting two indices of the Riemann tensor yields the Ricci tensor
             </p>
             <CodeBlock lang="julia"
 code={`ricci((θ, φ), e, simple=true)`} 
@@ -122,15 +121,15 @@ Num[1.0 0.0; 0.0 sin(θ)^2]
     (:co, :co)`}
             />
             <p className="learn-body">
-                And then raising via the metric and contracting the Ricci curvature tensor yields
-                the Ricci curvature scalar
+                And then raising via the metric and contracting the Ricci tensor yields
+                the Ricci scalar
             </p>
             <CodeBlock lang="julia"
 code={`ricci_scalar((θ, φ), e, simple=true)`} 
 result={`2`}
             />
             <p className="learn-body">
-                Combining the metric, Ricci tensor, and Ricci scalar yields the Einsten tensor, which
+                Combining the metric, Ricci tensor, and Ricci scalar yields the Einstein tensor, which
                 has the special property that its divergence is <Math>{`0`}</Math>
             </p>
             <CodeBlock lang="julia"

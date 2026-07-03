@@ -11,8 +11,8 @@ export default function Tensors() {
                 To an engineer, a tensor is a multidimensional array of numbers, but to a physicist
                 or mathematician, a tensor is a geometric object that transforms in specific ways
                 under coordinate changes. A tensor's type, denoted (m, n), describes how its
-                components tranform with coordinate changes, following m contravariant and n
-                covariant transformations. 
+                components transform with coordinate changes, following m contravariant and n
+                covariant transformations.
             </p>
             <p className="learn-body">
                 A (0, 0)-tensor, whose coordinates are invariant under all coordinate changes, is
@@ -22,8 +22,8 @@ export default function Tensors() {
             </p>
             <p className="learn-body">
                 TensorFlux uses Julia's vector <code>[]</code> and adjoint <code>[]'</code> types to
-                define contravariant an covariant indices. A vector indicates a contravariant index,
-                while an adjoint indicates a covariant index.Initialization of a vector and covector
+                define contravariant and covariant indices. A vector indicates a contravariant index,
+                while an adjoint indicates a covariant index. Initialization of a vector and covector
                 works as:
             </p>
             <CodeBlock lang="julia"
@@ -81,7 +81,12 @@ result={`-2`}
             />
             <p className="learn-body">
                 Indexing either entirely with symbols or with a mix of integers and symbols will
-                return an <code>IndexedTensor</code>
+                return an <code>IndexedTensor</code>, a thin wrapper pairing a <code>Tensor</code>
+                with the symbols labeling its indices. Those labels are what let operations line
+                indices up against each other, contracting the ones that repeat, which is covered
+                on the next page. Operating on an <code>IndexedTensor</code> returns another
+                <code>IndexedTensor</code> if any labeled indices remain, or a plain number if
+                every index contracts away
             </p>
             <CodeBlock lang="julia"
 code={`v[:i]`} 

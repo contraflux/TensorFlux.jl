@@ -33,9 +33,9 @@ v ⊗ w   # (1, 0) ⊗ (0, 1) → (1, 1)`}
 α = Tensor([2, 3]')
 L = v ⊗ w
 L ⊗ α ⊗ v`}
-                    result={`(3, 1)-Tensor:
-[24 32; -12 -16;;; 36 48; -18 -24;;;; -12 -16; 6 8;;; -18 -24; 9 12]
-    (:contra, :contra, :co, :contra)`}
+                    result={`(2, 2)-Tensor:
+[6 10; 12 20;;; 9 15; 18 30;;;; 12 20; 24 40;;; 18 30; 36 60]
+    (:contra, :co, :co, :contra)`}
                 />
                 <CodeBlock lang="julia" inset={60}
                     code={`# Also defined on bases — produces a higher-rank basis

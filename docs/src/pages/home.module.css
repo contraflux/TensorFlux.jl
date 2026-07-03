@@ -23,26 +23,26 @@
 .hero {
     position: relative;
     background-color: var(--bg);
-    padding: 130px 0 160px;
+    padding: 90px 0;
     border-bottom: 1px solid var(--border);
     overflow: hidden;
 }
 
 .heroBg {
     position: absolute;
-    inset: 0;
-    background-repeat: no-repeat;
-    background-position: right center;
-    background-size: 1100px auto;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
     opacity: 0.9;
 }
 
 .heroFade {
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(90deg, var(--bg) 0%, var(--bg) 32%, rgba(27, 28, 39, 0.55) 52%, rgba(27, 28, 39, 0) 78%),
-        linear-gradient(180deg, rgba(27, 28, 39, 0) 55%, var(--bg) 100%);
+    background: linear-gradient(to right, var(--bg) 50%, rgba(0, 0, 0, 0) 75%)
 }
 
 .heroText {
@@ -344,13 +344,14 @@ p.icon {
     }
 
     .heroBg {
-        background-size: 700px auto;
+        top: 12.5%;
+        height: 75%;
     }
 
     .heroFade {
         background:
-            linear-gradient(90deg, var(--bg) 0%, var(--bg) 55%, rgba(27, 28, 39, 0.6) 72%, rgba(27, 28, 39, 0.15) 100%),
-            linear-gradient(180deg, rgba(27, 28, 39, 0) 55%, var(--bg) 100%);
+            linear-gradient(to left, rgba(0, 0, 0, 0) 0%, var(--bg) 50%),
+            linear-gradient(180deg, var(--bg) 15%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 75%, var(--bg) 85%);
     }
 
     .featureGrid {
@@ -362,13 +363,15 @@ p.icon {
     }
 }
 
+@media (max-width: 720px) {
+    .title {
+        font-size: 30px;
+    }
+}
+
 @media (max-width: 560px) {
     .wrap {
         padding: 0 24px;
-    }
-
-    .title {
-        font-size: 30px;
     }
 
     .featureGrid {

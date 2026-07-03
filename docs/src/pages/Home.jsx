@@ -9,7 +9,7 @@ import surface from '../assets/learn/surface.png';
 import vectorfield from '../assets/learn/vectorfield.png';
 import scalarfield from '../assets/learn/scalarfield.png';
 import geodesic from '../assets/learn/geodesic.png';
-import holonomy from '../assets/learn/ptpath.png';
+import banner from '../assets/banner.jpg';
 
 const FEATURES = [
     {
@@ -45,9 +45,9 @@ export default function Home() {
     return (
         <>
             <Topbar />
-            <div className={style.page}>
+            <div className={`${style.page} page-fade-in`}>
                 <div className={style.hero}>
-                    <div className={style.heroBg} style={{ backgroundImage: `url(${holonomy})` }}></div>
+                    <img className={style.heroBg} src={banner} alt="" />
                     <div className={style.heroFade}></div>
                     <div className={style.wrap}>
                         <div className={style.heroText}>

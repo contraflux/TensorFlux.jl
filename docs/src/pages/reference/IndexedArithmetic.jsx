@@ -194,7 +194,7 @@ a[:i] * b[:j] * ε[:i, :j, :k]`}
 
             <FunctionDocs
                 id="multiplication-linearalgebra"
-                name="LinearAlgebra.:*"
+                name="Base.:* (contraction)"
                 code={`Base.:*(A::IndexedTensor, B::IndexedTensor)`}
                 description={<>The central operation of TensorFlux — contracts two <code>IndexedTensor</code>s along any pair of indices where one is contravariant in <code>A</code> and covariant in <code>B</code>, or vice versa. Matching index labels are summed over (Einstein summation); non-matching labels become free indices of the result. If no indices match, the tensor product <Math>{'A \\otimes B'}</Math> is returned. If all indices are contracted, a scalar is returned. Repeated contravariant–contravariant or covariant–covariant labels across both operands raise an error.</>}
                 args={[

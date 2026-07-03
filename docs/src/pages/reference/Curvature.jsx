@@ -80,12 +80,11 @@ Num[1.0 0.0; 0.0 sin(θ)^2]
     (:co, :co)`}
                 />
                 <CodeBlock lang="julia" inset={60}
-                    code={`# The Ricci tensor is proportional to the metric on a space of constant curvature
-g = metric(e)
-# R_ij = K * g_ij, where K is the Gaussian curvature
-ricci((θ, φ), e, simple=true)`}
+                    code={`# On the 2-sphere the Ricci tensor is proportional to the metric,
+# R_ij = K * g_ij, where K is the Gaussian curvature (here K = 1)
+metric(e)`}
                     result={`(0, 2)-Tensor:
-Num[1.0 0.0; 0.0 sin(θ)^2]
+Real[1 0; 0 sin(θ)^2]
     (:co, :co)`}
                 />
             </FunctionDocs>
@@ -139,19 +138,14 @@ ricci_scalar((x, y), e_flat, simple=true)`}
             >
                 <p className="learn-heading">Examples</p>
                 <CodeBlock lang="julia" inset={60}
-                    code={`@variables θ φ
+                    code={`# The Einstein tensor vanishes identically in any 2D space,
+# regardless of curvature — a low-dimensional degeneracy of
+# general relativity, not a special property of the sphere
+@variables θ φ
 e = Basis([
     Tensor([1, 0]),
     Tensor([0, sin(θ)])
 ])
-einstein((θ, φ), e, simple=true)`}
-                    result={`(0, 2)-Tensor:
-Num[0.0 0.0; 0.0 0]
-    (:co, :co)`}
-                />
-                <CodeBlock lang="julia" inset={60}
-                    code={`# The Einstein tensor vanishes on the 2-sphere —
-# consistent with being a vacuum solution in 2D
 einstein((θ, φ), e, simple=true)`}
                     result={`(0, 2)-Tensor:
 Num[0.0 0.0; 0.0 0]

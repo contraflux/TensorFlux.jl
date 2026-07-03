@@ -65,7 +65,7 @@ export default function Sidebar({ open = false }) {
             .flatMap(group => group.sections)
             .find(section => pathname.startsWith(section.path));
         if (activeSection && !openSections[activeSection.path]) {
-            setOpenSections(prev => ({ ...prev, [activeSection.path]: true }));
+            setOpenSections({ [activeSection.path]: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pathname]);

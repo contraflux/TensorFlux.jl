@@ -8,6 +8,7 @@ import {
     TensorAlgebra,
     DifferentialGeometry,
     DifferentialForms,
+    Symbolic,
     Visualization,
     Solver,
 } from './pages/learn';
@@ -45,6 +46,7 @@ export default function App() {
                     <Route path="/learn/tensor-algebra" element={<TensorAlgebra />} />
                     <Route path="/learn/differential-geometry" element={<DifferentialGeometry />} />
                     <Route path="/learn/differential-forms" element={<DifferentialForms />} />
+                    <Route path="/learn/symbolic" element={<Symbolic />} />
                     <Route path="/learn/visualization" element={<Visualization />} />
                     <Route path="/learn/solver" element={<Solver />} />
                     <Route path="/reference/geometric-objects" element={<GeometricObjects />} />

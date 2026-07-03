@@ -74,7 +74,7 @@ code={`X = Tensor([sin(θ), cos(φ)])
 vectors_2dembed!(ax3, (θ, φ), basis, embedding, θs, φs, X, spacing=2, normalize=true, lengthscale=0.15, colormap=:magma)`}
 img={vectorfield}
             />
-            <PageNav prev="Differential Forms" next="Solver" />
+            <PageNav prev="Symbolic" next="Solver" />
         </>
     );
 }
