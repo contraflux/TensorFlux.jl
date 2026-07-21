@@ -1,24 +1,34 @@
 # TensorFlux.jl
-A differential geometry library that stays true to the mathematical notation and Einstein summation convention
+
+A tensor and differential geometry library for Julia that stays true to mathematical notation and the Einstein summation convention.
+
+**[Read the docs →](https://contraflux.github.io/TensorFlux.jl/)** for a full walkthrough of every feature, plus a complete API reference.
 
 ## Installation
-TensorFlux.jl can be installed by either running
+
+TensorFlux.jl isn't yet registered, so install it directly from GitHub:
+
 ```julia
 julia> using Pkg
 julia> Pkg.add("https://github.com/contraflux/TensorFlux.jl")
 ```
+
 or by pressing `]` and running
+
 ```julia
 pkg> add https://github.com/contraflux/TensorFlux.jl
 ```
-Then it can be imported with
+
+Then import it with
+
 ```julia
 julia> using TensorFlux
 ```
 
 ## Quick Start
 
-Contracting two tensors
+Indexing a tensor with symbols and contracting repeated indices, the same way you would on paper:
+
 ```julia
 julia> L = Tensor([[2, 1]', [-1, 3]'])
 julia> v = Tensor([1, 2])
@@ -29,87 +39,39 @@ julia> L[:i][:j] * v[:j]  # matrix-vector product
   (:i,), ()
 ```
 
-Computing the Riemann curvature tensor on a 2-sphere:
+Symbolic coordinates keep derivatives and curvature exact, not numerically approximated. Here's the Riemann curvature tensor on a 2-sphere:
+
 ```julia
 julia> using Symbolics
-julia> @variables u v
+julia> @variables θ φ
 julia> basis = Basis([
     Tensor([1, 0]),
-    Tensor([0, sin(u)])
+    Tensor([0, sin(θ)])
 ])
-julia> simplify(riemann((u, v), basis))
+julia> riemann((θ, φ), basis, simple=true)
 (1, 3)-Tensor:
-Num[0.0 0.0; 0.0 -1.0;;; 0.0 sin(u)^2; 0 0;;;; 0.0 0; 1.0 0;;; -(sin(u)^2) 0; 0 0]
+Num[0.0 0.0; 0.0 -1.0;;; 0.0 sin(θ)^2; 0 0;;;; 0.0 0; 1.0 0;;; -(sin(θ)^2) 0; 0 0]
   (:contra, :co, :co, :co)
 ```
 
 ## Features
-### Algebra
-Tensors and bases of tensors, with algebra operations including contraction, scaling, addition, the tensor product, wedge product for differential forms, dot product for vectors, and symmetrization/antisymmetrization.
-### Geometry
-Tools for differential geometry, including the metric, connection coefficients, Lie bracket, Ricci scalar, and Riemann, Ricci, and Einstein tensors.
-### Calculus
-Tools for tensor calculus, with the partial, covariant, and exterior derivatives, and Hodge star
-### Symbolic
-Symbolic tensor components via Symbolics.jl, enabling exact computation of derivatives and geometric quantities.
 
-## API
-### Types
-`Tensor{T, R}` - An arbitrary rank R (m, n)-tensor of a type T
+**Algebra** — tensors and bases of tensors, with contraction, scaling, addition, the tensor product, wedge product for differential forms, dot product for vectors, and symmetrization/antisymmetrization, all driven by Einstein-notation indexing.
 
-`KroneckerDelta` - The Kronecker Delta δ
+**Geometry** — the metric, connection coefficients, and Lie bracket, plus the Riemann, Ricci, and Einstein tensors and the Ricci scalar.
 
-`LeviCivita` - The Levi-Civita Symbol ε
+**Calculus** — the partial, covariant, and exterior derivatives, and the Hodge star, for tensor and differential form calculus.
 
-`PartialDerivative{N}` - The partial derivative operator ∂ on N coordinates
+**Symbolic** — symbolic tensor components via Symbolics.jl, with `simplify`, `substitute`, and `evaluate` for turning exact symbolic results into concrete numbers.
 
-`CovariantDerivative` - The covariant derivative operator ∇
+**Visualization & solving** — plot surfaces, scalar fields, and vector fields with GLMakie, and solve the geodesic and parallel transport equations with DifferentialEquations.jl. These are optional package extensions — load `GLMakie` and/or `DifferentialEquations` alongside TensorFlux to enable them.
 
-`ExteriorDerivative` - The exterior derivative operator d
+## Core Types & Operators
 
-`HodgeStar` - The Hodge Star operator
+`Tensor{T, R}` — an arbitrary rank `R` `(m, n)`-tensor of type `T`
 
-### Functions
-**General**
+`Basis` — an ordered collection of tensors forming a frame for a vector space
 
-`Tensor()` - Constructor for `Tensor{T, R}`
+`⊗` — tensor product · `∧` — wedge product · `⋅` — dot product · `*` — contraction, following repeated indices
 
-`getindex()` - Einstein convention indexing
-
-**Algebra**
-
-`⊗` - Tensor product
-
-`*` - Tensor scaling and contraction
-
-`+` - Tensor addition
-
-`-` - Tensor subtraction
-
-`⋅` - Dot product for (1, 0)-tensors
-
-`∧` - Wedge product for (0, p)-tensors
-
-`symmetrize()` - Symmetrize a tensor
-
-`antisymmetrize()` - Antisymmetrize a tensor
-
-**Geometry**
-
-`metric()` - Metric tensor from a basis
-
-`inv()` - Invert a (2, 0) or (0, 2)-tensor
-
-`minkowski()` - Find the Minkowski norm on two vectors
-
-`christoffel()` - Compute the Levi-Civita Connection coefficients
-
-`lie()` - Compute the Lie bracket of two vectors
-
-`riemann()` - Compute the Riemann Curvature Tensor
-
-`ricci()` - Compute the Ricci Curvature Tensor
-
-`ricci_scalar()` - Compute the Ricci Scalar
-
-`einstein()` - Compute the Einstein Tensor
+For the complete API — every type, function, and keyword argument, with runnable examples — see the **[Reference docs](https://contraflux.github.io/TensorFlux.jl/reference/geometric-objects)**.
