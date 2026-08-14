@@ -2,7 +2,7 @@
 
 A tensor and differential geometry library for Julia that stays true to mathematical notation and the Einstein summation convention.
 
-**[Read the docs →](https://contraflux.github.io/TensorFlux.jl/)** for a full walkthrough of every feature, plus a complete API reference.
+**[Read the docs → ](https://echotops.github.io/TensorFlux.jl/)** for a full walkthrough of every feature, plus a complete API reference.
 
 ## Installation
 
